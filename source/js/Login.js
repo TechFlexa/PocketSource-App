@@ -4,11 +4,12 @@ import {
   View,
   Image,
   Dimensions,
-  StatusBar,
   ActivityIndicator,
   TouchableOpacity,
   Text,
-  BackHandler
+  BackHandler,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { Item, Input, Label, Form } from 'native-base';
 import { Font } from 'expo';
@@ -27,16 +28,16 @@ class Login extends Component {
     };
   }
 
-  async componentWillMount() {
-   await Font.loadAsync({
-     Roboto: require('native-base/Fonts/Roboto.ttf'),
-     Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
-   });
-
-   StatusBar.setHidden(true);
-  }
-  componentDidMount() {
+  async componentDidMount() {
+      if (Platform.OS === 'android') {
+        StatusBar.setTranslucent(false);
+        StatusBar.setBackgroundColor('#000000');
+      }
       BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+      await Font.loadAsync({
+        Roboto: require('native-base/Fonts/Roboto.ttf'),
+        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+      });
   }
 
   componentWillUnmount() {
@@ -47,6 +48,7 @@ class Login extends Component {
     // cool stuff to handle back button action
   }
   attemptLogin() {
+    this.setState({ loading: true });
     // attempt login here
   }
 

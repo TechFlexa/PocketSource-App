@@ -3,7 +3,7 @@ import Login from './js/Login';
 
 const Router = StackNavigator({
     login: { screen: Login }
-    //drawer: { screen: Drawer }, <to implement sidenavbar/drawer>
+    //drawer: { screen: Drawer }, <to implement sidebar/drawer/drawer>
   },
   
   {
