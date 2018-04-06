@@ -8,37 +8,34 @@ import {
 	Item,
 	Input,
 	Label,
-	Content,
 	Button
 } from 'native-base';
 
 export default class LoginScreen extends React.Component {
-
 	render() {
 		return (
-			<KeyboardAvoidingView behavior="height" style={styles.container}>
+			<KeyboardAvoidingView behavior="padding" style={styles.container}>
 				<View style={styles.head}>
 					<Text style={styles.logo}>PocketSource</Text>
 				</View>
 				<View style={styles.mainContent}>
 					<Form>
-			            <Item floatingLabel>
-			              <Label>Username</Label>
-			              <Input />
-			            </Item>
-			            <Item floatingLabel>
-			              <Label>Password</Label>
-			              <Input />
-			            </Item>
-			            <Button full style={styles.loginButton}>
-			            	<Text>Login</Text>
-			            </Button>
-			        </Form>				
-         		</View>
+						<Item floatingLabel>
+							<Label>Username</Label>
+							<Input />
+						</Item>
+						<Item floatingLabel>
+							<Label>Password</Label>
+							<Input />
+						</Item>
+						<Button full style={styles.loginButton}>
+							<Text>Login</Text>
+						</Button>
+					</Form>				
+				</View>
 			</KeyboardAvoidingView>
 		);
 	}
-
 }
 
 const styles = {
@@ -51,11 +48,11 @@ const styles = {
 	head: {
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	mainContent: {
 		flex: 1,
-		backgroundColor: '#3d3d3d'
+		backgroundColor: '#3d3d3d',
 	},
 	footer: {
 		flex: 0.5,
@@ -69,7 +66,7 @@ const styles = {
 		backgroundColor: '#3d3d3d',
 		padding: 10,
 		color: '#fffa65',
-		borderRadius: 5
+		borderRadius: 5,
 
 	},
 
