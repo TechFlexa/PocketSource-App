@@ -3,30 +3,27 @@ import {
 	View, Text, KeyboardAvoidingView,
 	ToastAndroid
 } from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
 import {
 	Form,
 	Item,
 	Input,
 	Label,
-	Content,
 	Button,
 } from 'native-base';
-
 import axios from 'axios';
 
 export default class LoginScreen extends React.Component {
 
-	state = {
-		loggedIn: false,
-		loading: false,
-		email: null,
-		password: null,
-		token: null
-	}
-
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		this.state = {
+			loggedIn: false,
+			loading: false,
+			email: null,
+			password: null,
+			token: null
+		}
 		this.loginButtonPress = this.loginButtonPress.bind(this);
 	}
 
@@ -43,7 +40,7 @@ export default class LoginScreen extends React.Component {
 				loading: false,
 			});
 			console.log(response.data.success);
-			if(response.data.success) {
+			if (response.data.success) {
 				this.setState({
 					loggedIn: true,
 					token: response.data.data.token
@@ -51,20 +48,18 @@ export default class LoginScreen extends React.Component {
 
 				// Alert.alert('Success', 'Successfully Logged In!');
 				ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
-				this.props.navigation.navigate('Home');
-			}
-			else {
+				Actions.Home();
+			} else {
 				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
 			}
 		})
 		.catch(e => {
 			console.log(e);
-		}) 
-
+		});
 	}
 
 	renderLoginText() {
-		if(this.state.loading) {
+		if (this.state.loading) {
 			return (
 				<Text>Logging in...</Text>
 			);
@@ -82,12 +77,12 @@ export default class LoginScreen extends React.Component {
 					<Form>
 			            <Item floatingLabel>
 			              <Label>Email</Label>
-			              <Input onChangeText={(email) => this.setState({email})} />
+			              <Input onChangeText={(email) => this.setState({ email })} />
 			            </Item>
 			            <Item floatingLabel>
 			              <Label>Password</Label>
 			              <Input 
-			              	onChangeText={(password) => this.setState({password})}
+			              	onChangeText={(password) => this.setState({ password })}
 			              	secureTextEntry
 			              />
 			            </Item>

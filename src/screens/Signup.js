@@ -15,6 +15,7 @@ import {
     Input
 } from 'native-base';
 import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 
 export default class SignUpScreen extends React.Component {
     constructor(props) {
@@ -47,13 +48,12 @@ export default class SignUpScreen extends React.Component {
 			this.setState({
 				loading: false,
 			});
-			console.log(response.data.success);
+			console.log(response.data);
 			if (response.data.success) {
-				// Alert.alert('Success', 'Successfully Logged In!');
 				ToastAndroid.show('Signed up Successfully!', ToastAndroid.SHORT);
-				this.props.navigation.navigate('login');
+				Actions.login();
 			} else {
-				ToastAndroid.show('Details Invalid', ToastAndroid.LONG);
+				ToastAndroid.show('Email Already Taken', ToastAndroid.LONG);
 			}
 		})
 		.catch(e => {
@@ -81,26 +81,36 @@ export default class SignUpScreen extends React.Component {
 					</Text>
 					<Form>
 						<Item floatingLabel>
-							<Label>Full Name</Label>
-							<Input onChangeText={(name) => this.setState({ name })} />
+							<Label style={styles.label}>Full Name</Label>
+							<Input
+								style={{ color: '#FFF' }}
+								underlineColorAndroid='transparent'
+								onChangeText={(name) => this.setState({ name })}
+							/>
 						</Item>
 						<Item floatingLabel>
-							<Label>Email</Label>
-							<Input 
+							<Label style={styles.label}>Email</Label>
+							<Input
+								style={{ color: '#FFF' }}
+								underlineColorAndroid='transparent' 
 								onChangeText={(email) => this.setState({ email })}	
 							/>
 						</Item>
                         <Item floatingLabel>
-							<Label>Password</Label>
+							<Label style={styles.label}>Password</Label>
 							<Input
 								secureTextEntry
+								style={{ color: '#FFF' }}
+								underlineColorAndroid='transparent'
 								onChangeText={(password) => this.setState({ password })}
 							/>
 						</Item>
                         <Item floatingLabel>
-							<Label>Confirm Password</Label>
+							<Label style={styles.label}>Confirm Password</Label>
 							<Input
 								secureTextEntry
+								style={{ color: '#FFF' }}
+								underlineColorAndroid='transparent'
 								onChangeText={(c_password) => this.setState({ c_password })}
 							/>
 						</Item>
@@ -150,10 +160,16 @@ const styles = {
 
 	},
 
+	label: {
+		color: '#FFF'
+	},
+
 	title: {
 		fontSize: 40,
 		marginTop: 100,
-		marginLeft: 20
+		marginLeft: 20,
+		color: '#FFF',
+		marginBottom: 30
 	},
 
 	poweredBy: {
@@ -166,7 +182,8 @@ const styles = {
 	loginButton: {
 		margin: 8,
 		borderRadius: 4,
-		backgroundColor: '#fff200'
+		backgroundColor: '#fff200',
+		marginTop: 20
 	}
 
 };
