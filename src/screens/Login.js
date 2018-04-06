@@ -14,7 +14,6 @@ import {
 import axios from 'axios';
 
 export default class LoginScreen extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -23,7 +22,7 @@ export default class LoginScreen extends React.Component {
 			email: null,
 			password: null,
 			token: null
-		}
+		};
 		this.loginButtonPress = this.loginButtonPress.bind(this);
 	}
 
