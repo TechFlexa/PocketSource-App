@@ -1,15 +1,15 @@
-import { StackNavigator } from 'react-navigation';
+import React from 'react';
+import { Stack, Router, Scene } from 'react-native-router-flux';
 import LoginScreen from '../screens/Login';
 import HomeScreen from '../screens/Home';
 
-const Router = StackNavigator({
-    login: { screen: LoginScreen },
-    Home: { screen: HomeScreen },
-    //drawer: { screen: Drawer }, <to implement sidebar/drawer/drawer>
-  },
-  {
-    initialRouteName: 'login',
-    headerMode: 'none',
-  });
+const MainRouter = () => (
+	<Router>
+		<Stack key="root">
+			<Scene key="login" component={LoginScreen} hideNavBar />
+			<Scene key="Home" component={HomeScreen} hideNavBar />
+		</Stack>
+	</Router>
+);
 
-export default Router;
+export default MainRouter;
