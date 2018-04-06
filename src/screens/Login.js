@@ -3,7 +3,7 @@ import {
 	View, Text, KeyboardAvoidingView,
 	ToastAndroid
 } from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
 import {
 	Form,
 	Item,
@@ -12,7 +12,6 @@ import {
 	Content,
 	Button,
 } from 'native-base';
-
 import axios from 'axios';
 
 export default class LoginScreen extends React.Component {
@@ -51,7 +50,7 @@ export default class LoginScreen extends React.Component {
 
 				// Alert.alert('Success', 'Successfully Logged In!');
 				ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
-				this.props.navigation.navigate('Home');
+				Actions.Home();
 			}
 			else {
 				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
