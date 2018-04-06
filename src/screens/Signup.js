@@ -2,7 +2,8 @@ import React from 'react';
 import {
     Text,
     KeyboardAvoidingView,
-    StatusBar
+	StatusBar,
+	ToastAndroid
 } from 'react-native';
 
 import {
@@ -13,64 +14,102 @@ import {
     Label,
     Input
 } from 'native-base';
-import { Font, AppLoading } from 'expo';
+import axios from 'axios';
 
 export default class SignUpScreen extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { loading: true };
-    }
+        this.state = { 
+			loading: false,
+			email: '',
+			name: '',
+			password: '',
+			c_password: '',
+		};
+		this.signupButtonPress = this.signupButtonPress.bind(this);
+	}
 
-    async componentDidMount() {
-        await Font.loadAsync({
-            Roboto: require('native-base/Fonts/Roboto.ttf'),
-            Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
-          });
-          StatusBar.setTranslucent(false);
-          StatusBar.setBackgroundColor('#000000');
-          this.setState({ loading: false });
-    }
+	componentDidMount() {
+		StatusBar.setTranslucent(false);
+		StatusBar.setBackgroundColor('#000000');
+		this.setState({ loading: false });
+	}
+	
+	signupButtonPress() {
+		this.setState({ loading: true });
+		axios.post('http://protected-spire-54144.herokuapp.com/api/register', {
+			email: this.state.email,
+			name: this.state.name,
+			password: this.state.password,
+			c_password: this.state.c_password
+		})
+		.then(response => {
+			this.setState({
+				loading: false,
+			});
+			console.log(response.data.success);
+			if (response.data.success) {
+				// Alert.alert('Success', 'Successfully Logged In!');
+				ToastAndroid.show('Signed up Successfully!', ToastAndroid.SHORT);
+				this.props.navigation.navigate('login');
+			} else {
+				ToastAndroid.show('Details Invalid', ToastAndroid.LONG);
+			}
+		})
+		.catch(e => {
+			console.log(e);
+		});
+	}
+
+	renderSignUpText() {
+		if (this.state.loading) {
+			return (
+				<Text>Signing Up...</Text>
+			);
+		}
+		return <Text>Sign Up</Text>;
+	}
+
 	render() {
-        if (this.state.loading) {
-            return (
-              <AppLoading />
-            );
-        }
         return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Content style={styles.mainContent}>
 					<Text
-						style={{ fontSize: 40, marginTop: 100, marginLeft: 20 }}
+						style={styles.title}
 					>
 						SignUp
 					</Text>
 					<Form>
 						<Item floatingLabel>
-							<Label>Username</Label>
-							<Input />
+							<Label>Full Name</Label>
+							<Input onChangeText={(name) => this.setState({ name })} />
 						</Item>
 						<Item floatingLabel>
+							<Label>Email</Label>
+							<Input 
+								onChangeText={(email) => this.setState({ email })}	
+							/>
+						</Item>
+                        <Item floatingLabel>
 							<Label>Password</Label>
-							<Input />
+							<Input
+								secureTextEntry
+								onChangeText={(password) => this.setState({ password })}
+							/>
 						</Item>
                         <Item floatingLabel>
-							<Label>Username</Label>
-							<Input />
+							<Label>Confirm Password</Label>
+							<Input
+								secureTextEntry
+								onChangeText={(c_password) => this.setState({ c_password })}
+							/>
 						</Item>
-                        <Item floatingLabel>
-							<Label>Username</Label>
-							<Input />
-						</Item>
-                        <Item floatingLabel>
-							<Label>Username</Label>
-							<Input />
-						</Item>
-                        <Item floatingLabel>
-							<Label>Username</Label>
-							<Input />
-						</Item>
-						<Button full style={styles.loginButton}>
-							<Text>Login</Text>
+						<Button 
+							full
+							style={styles.loginButton}
+							onPress={this.signupButtonPress}
+						>
+							{this.renderSignUpText()}
 						</Button>
 					</Form>				
 				</Content>
@@ -111,8 +150,10 @@ const styles = {
 
 	},
 
-	content: {
-
+	title: {
+		fontSize: 40,
+		marginTop: 100,
+		marginLeft: 20
 	},
 
 	poweredBy: {

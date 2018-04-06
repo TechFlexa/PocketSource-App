@@ -9,19 +9,13 @@ import {
 	Item,
 	Input,
 	Label,
-<<<<<<< HEAD
-	Button
-=======
 	Content,
 	Button,
->>>>>>> 80d533e96f4afe269af73d8058af84291c3e2000
 } from 'native-base';
 
 import axios from 'axios';
 
 export default class LoginScreen extends React.Component {
-<<<<<<< HEAD
-=======
 
 	state = {
 		loggedIn: false,
@@ -78,7 +72,6 @@ export default class LoginScreen extends React.Component {
 		return <Text>Login</Text>;
 	}
 
->>>>>>> 80d533e96f4afe269af73d8058af84291c3e2000
 	render() {
 		return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -87,21 +80,6 @@ export default class LoginScreen extends React.Component {
 				</View>
 				<View style={styles.mainContent}>
 					<Form>
-<<<<<<< HEAD
-						<Item floatingLabel>
-							<Label>Username</Label>
-							<Input />
-						</Item>
-						<Item floatingLabel>
-							<Label>Password</Label>
-							<Input />
-						</Item>
-						<Button full style={styles.loginButton}>
-							<Text>Login</Text>
-						</Button>
-					</Form>				
-				</View>
-=======
 			            <Item floatingLabel>
 			              <Label>Email</Label>
 			              <Input onChangeText={(email) => this.setState({email})} />
@@ -120,7 +98,6 @@ export default class LoginScreen extends React.Component {
 			            </Button>
 			        </Form>				
          		</View>
->>>>>>> 80d533e96f4afe269af73d8058af84291c3e2000
 			</KeyboardAvoidingView>
 		);
 	}
