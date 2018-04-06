@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-	View, Text, KeyboardAvoidingView
+	View, Text, KeyboardAvoidingView,
+	ToastAndroid
 } from 'react-native';
 
 import {
@@ -9,29 +10,91 @@ import {
 	Input,
 	Label,
 	Content,
-	Button
+	Button,
 } from 'native-base';
+
+import axios from 'axios';
 
 export default class LoginScreen extends React.Component {
 
+	state = {
+		loggedIn: false,
+		loading: false,
+		email: null,
+		password: null,
+		token: null
+	}
+
+	constructor() {
+		super();
+		this.loginButtonPress = this.loginButtonPress.bind(this);
+	}
+
+	loginButtonPress() {
+		//Call API
+		this.setState({ loading: true });
+
+		axios.post('http://protected-spire-54144.herokuapp.com/api/login',{
+			email: this.state.email,
+			password: this.state.password,
+		})
+		.then(response => {
+			this.setState({
+				loading: false,
+			});
+			console.log(response.data.success);
+			if(response.data.success) {
+				this.setState({
+					loggedIn: true,
+					token: response.data.data.token
+				});
+
+				// Alert.alert('Success', 'Successfully Logged In!');
+				ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
+				this.props.navigation.navigate('Home');
+			}
+			else {
+				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
+			}
+		})
+		.catch(e => {
+			console.log(e);
+		}) 
+
+	}
+
+	renderLoginText() {
+		if(this.state.loading) {
+			return (
+				<Text>Logging in...</Text>
+			);
+		}
+		return <Text>Login</Text>;
+	}
+
 	render() {
 		return (
-			<KeyboardAvoidingView behavior="height" style={styles.container}>
+			<KeyboardAvoidingView behavior="padding" style={styles.container}>
 				<View style={styles.head}>
 					<Text style={styles.logo}>PocketSource</Text>
 				</View>
 				<View style={styles.mainContent}>
 					<Form>
 			            <Item floatingLabel>
-			              <Label>Username</Label>
-			              <Input />
+			              <Label>Email</Label>
+			              <Input onChangeText={(email) => this.setState({email})} />
 			            </Item>
 			            <Item floatingLabel>
 			              <Label>Password</Label>
-			              <Input />
+			              <Input 
+			              	onChangeText={(password) => this.setState({password})}
+			              	secureTextEntry
+			              />
 			            </Item>
-			            <Button full style={styles.loginButton}>
-			            	<Text>Login</Text>
+			            <Button full style={styles.loginButton}
+			            	onPress={this.loginButtonPress}
+			            >
+			            	{this.renderLoginText()}
 			            </Button>
 			        </Form>				
          		</View>
