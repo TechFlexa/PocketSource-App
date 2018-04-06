@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-	View, Text, KeyboardAvoidingView
+	View, Text, KeyboardAvoidingView,
+	ToastAndroid
 } from 'react-native';
 
 import {
@@ -8,10 +9,76 @@ import {
 	Item,
 	Input,
 	Label,
+<<<<<<< HEAD
 	Button
+=======
+	Content,
+	Button,
+>>>>>>> 80d533e96f4afe269af73d8058af84291c3e2000
 } from 'native-base';
 
+import axios from 'axios';
+
 export default class LoginScreen extends React.Component {
+<<<<<<< HEAD
+=======
+
+	state = {
+		loggedIn: false,
+		loading: false,
+		email: null,
+		password: null,
+		token: null
+	}
+
+	constructor() {
+		super();
+		this.loginButtonPress = this.loginButtonPress.bind(this);
+	}
+
+	loginButtonPress() {
+		//Call API
+		this.setState({ loading: true });
+
+		axios.post('http://protected-spire-54144.herokuapp.com/api/login',{
+			email: this.state.email,
+			password: this.state.password,
+		})
+		.then(response => {
+			this.setState({
+				loading: false,
+			});
+			console.log(response.data.success);
+			if(response.data.success) {
+				this.setState({
+					loggedIn: true,
+					token: response.data.data.token
+				});
+
+				// Alert.alert('Success', 'Successfully Logged In!');
+				ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
+				this.props.navigation.navigate('Home');
+			}
+			else {
+				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
+			}
+		})
+		.catch(e => {
+			console.log(e);
+		}) 
+
+	}
+
+	renderLoginText() {
+		if(this.state.loading) {
+			return (
+				<Text>Logging in...</Text>
+			);
+		}
+		return <Text>Login</Text>;
+	}
+
+>>>>>>> 80d533e96f4afe269af73d8058af84291c3e2000
 	render() {
 		return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -20,6 +87,7 @@ export default class LoginScreen extends React.Component {
 				</View>
 				<View style={styles.mainContent}>
 					<Form>
+<<<<<<< HEAD
 						<Item floatingLabel>
 							<Label>Username</Label>
 							<Input />
@@ -33,6 +101,26 @@ export default class LoginScreen extends React.Component {
 						</Button>
 					</Form>				
 				</View>
+=======
+			            <Item floatingLabel>
+			              <Label>Email</Label>
+			              <Input onChangeText={(email) => this.setState({email})} />
+			            </Item>
+			            <Item floatingLabel>
+			              <Label>Password</Label>
+			              <Input 
+			              	onChangeText={(password) => this.setState({password})}
+			              	secureTextEntry
+			              />
+			            </Item>
+			            <Button full style={styles.loginButton}
+			            	onPress={this.loginButtonPress}
+			            >
+			            	{this.renderLoginText()}
+			            </Button>
+			        </Form>				
+         		</View>
+>>>>>>> 80d533e96f4afe269af73d8058af84291c3e2000
 			</KeyboardAvoidingView>
 		);
 	}
