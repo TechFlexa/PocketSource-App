@@ -1,7 +1,8 @@
 import React from 'react';
 import { Stack, Router, Scene } from 'react-native-router-flux';
-import LoginScreen from '../screens/Login';
 import HomeScreen from '../screens/Home';
+import SignUpScreen from '../screens/Signup';
+import LoginScreen from '../screens/Login';
 
 const MainRouter = () => (
 	<Router 
@@ -10,9 +11,9 @@ const MainRouter = () => (
 		titleStyle={{ color: '#3d3d3d' }}
 	>
 		<Stack key="root">
-			<Scene key="login" component={LoginScreen} hideNavBar />
-			<Scene key="Home" title="Pocket Source" component={HomeScreen} initial
-			/>
+			<Scene key="Home" component={HomeScreen} hideNavBar />
+			<Scene key="login" component={LoginScreen} hideNavBar initial/>
+			<Scene key="signup" component={SignUpScreen} hideNavBar />
 		</Stack>
 	</Router>
 );
