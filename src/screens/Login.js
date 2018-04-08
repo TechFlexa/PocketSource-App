@@ -13,7 +13,10 @@ import {
 	Spinner,
 
 } from 'native-base';
+import commonStyles from '../common/Styles';
+
 import axios from 'axios';
+import { AuthUtility } from '../utils';
 
 export default class LoginScreen extends React.Component {
 	constructor(props) {
@@ -40,16 +43,15 @@ export default class LoginScreen extends React.Component {
 			this.setState({
 				loading: false,
 			});
-			console.log(response.data.success);
 			if (response.data.success) {
 				this.setState({
 					loggedIn: true,
 					token: response.data.data.token
 				});
 
-				// Alert.alert('Success', 'Successfully Logged In!');
-				ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
-				Actions.Home();
+				//Utitlity function to handle successful login
+				AuthUtility.loginSuccessful(this.state.token);
+
 			} else {
 				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
 			}
@@ -77,11 +79,11 @@ export default class LoginScreen extends React.Component {
 				<View style={styles.mainContent}>
 					<Form>
 			            <Item floatingLabel>
-			              <Label>Email</Label>
+			              <Label style={commonStyles.textWhite}>Email</Label>
 			              <Input onChangeText={(email) => this.setState({ email })} />
 			            </Item>
 			            <Item floatingLabel>
-			              <Label>Password</Label>
+			              <Label style={commonStyles.textWhite}>Password</Label>
 			              <Input 
 			              	onChangeText={(password) => this.setState({ password })}
 			              	secureTextEntry
@@ -94,8 +96,8 @@ export default class LoginScreen extends React.Component {
 			            </Button>
 			        </Form>
 			        <View style={{ padding: 8}}>
-			        <Text>New to PocketSource? </Text>
-			        <Text onPress={() => Actions.signup()}>SignUp Here</Text>
+			        <Text style={commonStyles.textWhite}>New to PocketSource? </Text>
+			        <Text style={commonStyles.textWhite} onPress={() => Actions.signup()}>SignUp Here</Text>
 			        </View>				
          		</View>
 			</KeyboardAvoidingView>
