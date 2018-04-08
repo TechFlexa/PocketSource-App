@@ -13,8 +13,10 @@ import {
 	Spinner,
 
 } from 'native-base';
+import commonStyles from '../common/Styles';
+
 import axios from 'axios';
-import { AuthUtitlity } from '../utils';
+import { AuthUtility } from '../utils';
 
 export default class LoginScreen extends React.Component {
 	constructor(props) {
@@ -26,9 +28,6 @@ export default class LoginScreen extends React.Component {
 			password: null,
 			token: null
 		};
-
-		AuthUtitlity.alreadyLogged();
-
 		this.loginButtonPress = this.loginButtonPress.bind(this);
 	}
 
@@ -51,7 +50,7 @@ export default class LoginScreen extends React.Component {
 				});
 
 				//Utitlity function to handle successful login
-				AuthUtitlity.loginSuccessful();
+				AuthUtility.loginSuccessful(this.state.token);
 
 			} else {
 				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
@@ -80,11 +79,11 @@ export default class LoginScreen extends React.Component {
 				<View style={styles.mainContent}>
 					<Form>
 			            <Item floatingLabel>
-			              <Label>Email</Label>
+			              <Label style={commonStyles.textWhite}>Email</Label>
 			              <Input onChangeText={(email) => this.setState({ email })} />
 			            </Item>
 			            <Item floatingLabel>
-			              <Label>Password</Label>
+			              <Label style={commonStyles.textWhite}>Password</Label>
 			              <Input 
 			              	onChangeText={(password) => this.setState({ password })}
 			              	secureTextEntry
@@ -97,8 +96,8 @@ export default class LoginScreen extends React.Component {
 			            </Button>
 			        </Form>
 			        <View style={{ padding: 8}}>
-			        <Text>New to PocketSource? </Text>
-			        <Text onPress={() => Actions.signup()}>SignUp Here</Text>
+			        <Text style={commonStyles.textWhite}>New to PocketSource? </Text>
+			        <Text style={commonStyles.textWhite} onPress={() => Actions.signup()}>SignUp Here</Text>
 			        </View>				
          		</View>
 			</KeyboardAvoidingView>

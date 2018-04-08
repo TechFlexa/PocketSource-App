@@ -11,8 +11,8 @@ const MainRouter = () => (
 		titleStyle={{ color: '#3d3d3d' }}
 	>
 		<Stack key="root">
-			<Scene key="login" component={LoginScreen} hideNavBar inital/>
-			<Scene key="Home" component={HomeScreen} hideNavBar />
+			<Scene key="login" component={LoginScreen} type="reset" hideNavBar initial />
+			<Scene key="Home" component={HomeScreen} type="reset" hideNavBar />
 			<Scene key="signup" component={SignUpScreen} hideNavBar />
 		</Stack>
 	</Router>

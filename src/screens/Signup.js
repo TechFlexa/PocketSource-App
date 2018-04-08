@@ -165,11 +165,9 @@ const styles = {
 		color: '#FFF'
 	},
 	title: {
-		fontSize: 40,
-		marginTop: 100,
-		marginLeft: 20,
+		fontSize: 35,
 		color: '#FFF',
-		marginBottom: 30
+		padding: 8
 	},
 
 	loginButton: {

@@ -10,14 +10,14 @@ const set = async (store,key,data) => {
 }
 
 const get = async (store,key) => {
+	let value;
 	try {
-	  const value = await AsyncStorage.getItem(`@${store}:${key}`);
+	  value = await AsyncStorage.getItem(`@${store}:${key}`);
 	  if (value !== null){
 	    return value;
 	  }
-	  return false;
 	} catch (error) {
-	  return false;
+	  return value;
 	}
 }
 
@@ -26,17 +26,15 @@ const remove = async (store,key) => {
 	  await AsyncStorage.removeItem(`@${store}:${key}`);
 	  return true;
 	} catch (error) {
-	  return false;
+	  return error;
 	}
 }
 
-const setToken = (token) => set('Auth','token',token);
+const setToken = async (token) => await set('Auth','token',token);
 
-const getToken = () => {
-	return get('Auth','token')
-};
+const getToken = async () => await get('Auth','token');
 
-const removeToken = () => remove('Auth','token');
+const removeToken = async () => await remove('Auth','token');
 
 
 module.exports = {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Actions } from 'react-native-router-flux';
 import { 
 	Container, Header, Content,
 	Footer, FooterTab, Button, Icon,
@@ -7,7 +8,10 @@ import {
 from 'native-base';
 import commonStyles from '../common/Styles';
 
+import { AsyncStoreUtility, AuthUtility } from '../utils';
+
 export default class HomeScreen extends Component {
+
   render() {
     return (
       <Container>
@@ -19,7 +23,16 @@ export default class HomeScreen extends Component {
           	<Icon name="md-more" />
           </Right>
         </Header>
-        <Content />
+        <Content>
+          <Button onPress={
+            () => {
+              AsyncStoreUtility.removeToken()
+                .then(() => Actions.login());
+            }
+          }>
+            <Text>Logout</Text>
+          </Button>
+        </Content>
         <Footer>
           <FooterTab style={commonStyles.backgroundPrimary}>
             <Button>
