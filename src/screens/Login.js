@@ -14,6 +14,7 @@ import {
 
 } from 'native-base';
 import axios from 'axios';
+import { AuthUtitlity } from '../utils';
 
 export default class LoginScreen extends React.Component {
 	constructor(props) {
@@ -25,6 +26,9 @@ export default class LoginScreen extends React.Component {
 			password: null,
 			token: null
 		};
+
+		AuthUtitlity.alreadyLogged();
+
 		this.loginButtonPress = this.loginButtonPress.bind(this);
 	}
 
@@ -40,16 +44,15 @@ export default class LoginScreen extends React.Component {
 			this.setState({
 				loading: false,
 			});
-			console.log(response.data.success);
 			if (response.data.success) {
 				this.setState({
 					loggedIn: true,
 					token: response.data.data.token
 				});
 
-				// Alert.alert('Success', 'Successfully Logged In!');
-				ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
-				Actions.Home();
+				//Utitlity function to handle successful login
+				AuthUtitlity.loginSuccessful();
+
 			} else {
 				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
 			}
