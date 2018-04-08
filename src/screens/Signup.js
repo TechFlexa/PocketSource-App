@@ -2,10 +2,11 @@ import React from 'react';
 import {
     Text,
     KeyboardAvoidingView,
+	ToastAndroid,
 	StatusBar,
-	ToastAndroid
+	View
 } from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
 import {
     Content,
     Button,
@@ -15,7 +16,7 @@ import {
     Input
 } from 'native-base';
 import axios from 'axios';
-import { Actions } from 'react-native-router-flux';
+import commonStyles from '../common/Styles';
 
 export default class SignUpScreen extends React.Component {
     constructor(props) {
@@ -73,7 +74,7 @@ export default class SignUpScreen extends React.Component {
 	render() {
         return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container}>
-                <Content style={styles.mainContent}>
+                <View style={styles.mainContent}>
 					<Text
 						style={styles.title}
 					>
@@ -81,35 +82,35 @@ export default class SignUpScreen extends React.Component {
 					</Text>
 					<Form>
 						<Item floatingLabel>
-							<Label style={styles.label}>Full Name</Label>
+							<Label style={commonStyles.textWhite}>Full Name</Label>
 							<Input
-								style={{ color: '#FFF' }}
+								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent'
 								onChangeText={(name) => this.setState({ name })}
 							/>
 						</Item>
 						<Item floatingLabel>
-							<Label style={styles.label}>Email</Label>
+							<Label style={commonStyles.textWhite}>Email</Label>
 							<Input
-								style={{ color: '#FFF' }}
+								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent' 
 								onChangeText={(email) => this.setState({ email })}	
 							/>
 						</Item>
                         <Item floatingLabel>
-							<Label style={styles.label}>Password</Label>
+							<Label style={commonStyles.textWhite}>Password</Label>
 							<Input
 								secureTextEntry
-								style={{ color: '#FFF' }}
+								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent'
 								onChangeText={(password) => this.setState({ password })}
 							/>
 						</Item>
                         <Item floatingLabel>
-							<Label style={styles.label}>Confirm Password</Label>
+							<Label style={commonStyles.textWhite}>Confirm Password</Label>
 							<Input
 								secureTextEntry
-								style={{ color: '#FFF' }}
+								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent'
 								onChangeText={(c_password) => this.setState({ c_password })}
 							/>
@@ -119,10 +120,10 @@ export default class SignUpScreen extends React.Component {
 							style={styles.loginButton}
 							onPress={this.signupButtonPress}
 						>
-							{this.renderSignUpText()}
+							<Text>Sign Up</Text>
 						</Button>
 					</Form>				
-				</Content>
+				</View>
 			</KeyboardAvoidingView>
 		);
     }
@@ -163,7 +164,6 @@ const styles = {
 	label: {
 		color: '#FFF'
 	},
-
 	title: {
 		fontSize: 40,
 		marginTop: 100,
@@ -172,18 +172,11 @@ const styles = {
 		marginBottom: 30
 	},
 
-	poweredBy: {
-		fontSize: 20,
-		borderWidth: 1,
-		borderRadius: 5,
-		padding: 5
-	},
-
 	loginButton: {
 		margin: 8,
 		borderRadius: 4,
 		backgroundColor: '#fff200',
 		marginTop: 20
-	}
+	},
 
 };
