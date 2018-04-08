@@ -3,10 +3,12 @@ import {
     Text,
     KeyboardAvoidingView,
 	ToastAndroid,
+	StatusBar,
 	View
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
+    Content,
     Button,
     Form,
     Item,
@@ -17,10 +19,9 @@ import axios from 'axios';
 import commonStyles from '../common/Styles';
 
 export default class SignUpScreen extends React.Component {
-
-    constructor() {
-        super();    	
-		this.state = { 
+    constructor(props) {
+        super(props);
+        this.state = { 
 			loading: false,
 			email: '',
 			name: '',
@@ -28,6 +29,12 @@ export default class SignUpScreen extends React.Component {
 			c_password: '',
 		};
 		this.signupButtonPress = this.signupButtonPress.bind(this);
+	}
+
+	componentDidMount() {
+		StatusBar.setTranslucent(false);
+		StatusBar.setBackgroundColor('#000000');
+		this.setState({ loading: false });
 	}
 	
 	signupButtonPress() {
@@ -153,6 +160,10 @@ const styles = {
 		borderRadius: 5,
 
 	},
+
+	label: {
+		color: '#FFF'
+	},
 	title: {
 		fontSize: 40,
 		marginTop: 100,
@@ -167,4 +178,5 @@ const styles = {
 		backgroundColor: '#fff200',
 		marginTop: 20
 	},
+
 };
