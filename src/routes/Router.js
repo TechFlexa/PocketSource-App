@@ -12,7 +12,7 @@ const MainRouter = () => (
 	>
 		<Stack key="root">
 			<Scene key="Home" component={HomeScreen} hideNavBar />
-			<Scene key="login" component={LoginScreen} hideNavBar initial/>
+			<Scene key="login" component={LoginScreen} hideNavBar/>
 			<Scene key="signup" component={SignUpScreen} hideNavBar />
 		</Stack>
 	</Router>
