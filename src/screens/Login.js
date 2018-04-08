@@ -10,6 +10,8 @@ import {
 	Input,
 	Label,
 	Button,
+	Spinner,
+
 } from 'native-base';
 import axios from 'axios';
 
@@ -60,7 +62,7 @@ export default class LoginScreen extends React.Component {
 	renderLoginText() {
 		if (this.state.loading) {
 			return (
-				<Text>Logging in...</Text>
+				<Spinner />
 			);
 		}
 		return <Text>Login</Text>;
