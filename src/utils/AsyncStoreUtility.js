@@ -1,40 +1,40 @@
 import { AsyncStorage } from 'react-native';
 
-const set = async (store,key,data) => {
+const set = async (store, key, data) => {
 	try {
-	  await AsyncStorage.setItem(`@${store}:${key}`, `${data}`);
-	  return true;
+		await AsyncStorage.setItem(`@${store}:${key}`, `${data}`);
+		return true;
 	} catch (error) {
-	  return false;
+		return false;
 	}
-}
+};
 
-const get = async (store,key) => {
+const get = async (store, key) => {
 	let value;
 	try {
-	  value = await AsyncStorage.getItem(`@${store}:${key}`);
-	  if (value !== null){
-	    return value;
-	  }
+		value = await AsyncStorage.getItem(`@${store}:${key}`);
+		if (value !== null) {
+			return value;
+		}
 	} catch (error) {
-	  return value;
+		return value;
 	}
-}
+};
 
-const remove = async (store,key) => {
+const remove = async (store, key) => {
 	try {
-	  await AsyncStorage.removeItem(`@${store}:${key}`);
-	  return true;
+		await AsyncStorage.removeItem(`@${store}:${key}`);
+		return true;
 	} catch (error) {
-	  return error;
+		return error;
 	}
-}
+};
 
-const setToken = async (token) => await set('Auth','token',token);
+const setToken = async (token) => await set('Auth', 'token', token);
 
-const getToken = async () => await get('Auth','token');
+const getToken = async () => await get('Auth', 'token');
 
-const removeToken = async () => await remove('Auth','token');
+const removeToken = async () => await remove('Auth', 'token');
 
 
 module.exports = {
