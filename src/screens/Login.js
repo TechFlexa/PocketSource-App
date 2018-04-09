@@ -13,9 +13,8 @@ import {
 	Spinner,
 
 } from 'native-base';
-import commonStyles from '../common/Styles';
-
 import axios from 'axios';
+import commonStyles from '../common/Styles';
 import { AuthUtility } from '../utils';
 
 export default class LoginScreen extends React.Component {
@@ -35,7 +34,7 @@ export default class LoginScreen extends React.Component {
 		//Call API
 		this.setState({ loading: true });
 
-		axios.post('http://protected-spire-54144.herokuapp.com/api/login',{
+		axios.post('http://protected-spire-54144.herokuapp.com/api/login', {
 			email: this.state.email,
 			password: this.state.password,
 		})
@@ -51,7 +50,6 @@ export default class LoginScreen extends React.Component {
 
 				//Utitlity function to handle successful login
 				AuthUtility.loginSuccessful(this.state.token);
-
 			} else {
 				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
 			}
@@ -89,13 +87,15 @@ export default class LoginScreen extends React.Component {
 			              	secureTextEntry
 			              />
 			            </Item>
-			            <Button full style={styles.loginButton}
+			            <Button
+							full
+							style={styles.loginButton}
 			            	onPress={this.loginButtonPress}
 			            >
 			            	{this.renderLoginText()}
 			            </Button>
 			        </Form>
-			        <View style={{ padding: 8}}>
+			        <View style={{ padding: 8 }}>
 			        <Text style={commonStyles.textWhite}>New to PocketSource? </Text>
 			        <Text style={commonStyles.textWhite} onPress={() => Actions.signup()}>SignUp Here</Text>
 			        </View>				
