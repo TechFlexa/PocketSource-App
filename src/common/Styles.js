@@ -13,6 +13,16 @@ const Styles = StyleSheet.create({
 		backgroundColor: '#fff200',
 		padding: 5
 	},
+
+	backgroundWhite: {
+		backgroundColor: '#fff',
+		padding: 5
+	},
+
+	backgroundSecondary: {
+		backgroundColor: '#7158e2',
+		padding: 5
+	}
 });
 
 export default Styles;

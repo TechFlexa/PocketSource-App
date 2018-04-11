@@ -11,7 +11,6 @@ import {
 	Label,
 	Button,
 	Spinner,
-
 } from 'native-base';
 import axios from 'axios';
 import commonStyles from '../common/Styles';
@@ -28,6 +27,8 @@ export default class LoginScreen extends React.Component {
 			token: null
 		};
 		this.loginButtonPress = this.loginButtonPress.bind(this);
+
+		AuthUtility.alreadyLogged();
 	}
 
 	loginButtonPress() {
@@ -65,7 +66,7 @@ export default class LoginScreen extends React.Component {
 				<Spinner />
 			);
 		}
-		return <Text>Login</Text>;
+		return <Text style={commonStyles.textWhite}>Login</Text>;
 	}
 
 	render() {
@@ -77,11 +78,11 @@ export default class LoginScreen extends React.Component {
 				<View style={styles.mainContent}>
 					<Form>
 			            <Item floatingLabel>
-			              <Label style={commonStyles.textWhite}>Email</Label>
+			              <Label>Email</Label>
 			              <Input onChangeText={(email) => this.setState({ email })} />
 			            </Item>
 			            <Item floatingLabel>
-			              <Label style={commonStyles.textWhite}>Password</Label>
+			              <Label>Password</Label>
 			              <Input 
 			              	onChangeText={(password) => this.setState({ password })}
 			              	secureTextEntry
@@ -96,8 +97,8 @@ export default class LoginScreen extends React.Component {
 			            </Button>
 			        </Form>
 			        <View style={{ padding: 8 }}>
-			        <Text style={commonStyles.textWhite}>New to PocketSource? </Text>
-			        <Text style={commonStyles.textWhite} onPress={() => Actions.signup()}>SignUp Here</Text>
+			        <Text>New to PocketSource? </Text>
+			        <Text onPress={() => Actions.signup()}>SignUp Here</Text>
 			        </View>				
          		</View>
 			</KeyboardAvoidingView>
@@ -109,7 +110,7 @@ const styles = {
 
 	container: {
 		flex: 1,
-		backgroundColor: '#fff200',
+		backgroundColor: '#f1f2f6',
 	},
 
 	head: {
@@ -118,8 +119,8 @@ const styles = {
 		justifyContent: 'center',
 	},
 	mainContent: {
-		flex: 1,
-		backgroundColor: '#3d3d3d',
+		flex: 2,
+		backgroundColor: '#f1f2f6',
 	},
 	footer: {
 		flex: 0.5,
@@ -130,9 +131,9 @@ const styles = {
 	logo: {
 		fontWeight: 'bold',
 		fontSize: 25,
-		backgroundColor: '#3d3d3d',
+		backgroundColor: '#2ed573',
 		padding: 10,
-		color: '#fffa65',
+		color: '#f1f2f6',
 		borderRadius: 5,
 
 	},
@@ -151,7 +152,7 @@ const styles = {
 	loginButton: {
 		margin: 8,
 		borderRadius: 4,
-		backgroundColor: '#fff200'
+		backgroundColor: '#2ed573',
 	}
 
 };

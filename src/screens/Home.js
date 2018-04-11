@@ -1,48 +1,57 @@
 import React, { Component } from 'react';
+import { FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { 
 	Container, Header, Content,
 	Footer, FooterTab, Button, Icon,
 	Text, Right, Body, Title, View,
+  Spinner, Card, CardItem
 }
 from 'native-base';
 import TabMain from './Tabs/TabMain';
+import AddPost from './Tabs/AddPost';
+import HomeTab from './Tabs/HomeTab';
 import commonStyles from '../common/Styles';
 import { AsyncStoreUtility } from '../utils';
+import axios from 'axios';
 
 export default class HomeScreen extends Component {
   constructor(props) {
-    super(props);
-    this.state = { pageSelected: 0 };
+        super(props);
+        this.state = { 
+            fetched: false,
+            data: [] 
+        };
+
+        this.fetchPosts();
   }
 
-  renderPage() {
-    if (this.state.pageSelected === 0) {
-      return (
-        <Button 
-          onPress={() => {
-              AsyncStoreUtility.removeToken()
-                .then(() => Actions.login());
-            }
+  fetchPosts() {
+      axios.post('http://protected-spire-54144.herokuapp.com/api/post/index/')
+      .then(response => {
+          this.setState({ 
+              fetched: true,
+              data: response.data.Posts
+          });
+      })
+      .catch(e => {
+          console.log(e);
           }
-        >
-          <Text>Logout</Text>
-        </Button>
       );
-    } else if (this.state.pageSelected === 1) {
-      return (
-        <TabMain />
-      );
-    }
-    return (
-      <View />
-    );
+  }
+
+  keyExtract(item) {
+      return item.id;
   }
 
   render() {
+    // if (!this.state.fetched) {
+    //   return <Spinner />;
+    // }
+
     return (
       <Container>
-        <Header style={commonStyles.backgroundPrimary}>
+        <Header style={commonStyles.backgroundWhite}>
           <Body>
             <Title style={commonStyles.textPrimary}>PocketSource</Title>
           </Body>
@@ -51,32 +60,28 @@ export default class HomeScreen extends Component {
           </Right>
         </Header>
         <Content>
-          {this.renderPage()}
+          <FlatList
+                data={this.state.data}
+                keyExtractor={this.keyExtract.bind(this)}
+                onRefresh={this.fetchPosts.bind(this)}
+                refreshing={!this.state.fetched}
+                renderItem={
+                    ({ item }) => {
+                        console.log(item);
+                        return (
+                            <Card>
+                              <CardItem>
+                                  <Text>{item.title}</Text>
+                              </CardItem>
+                              <CardItem>
+                                  <Text>{item.body}</Text>
+                              </CardItem>
+                            </Card>
+                        );
+                    }
+                }
+            />
         </Content>
-        <Footer>
-          <FooterTab style={commonStyles.backgroundPrimary}>
-            <Button
-              onPress={() => this.setState({ pageSelected: 0 })}
-            >
-              <Icon name="apps" style={commonStyles.textPrimary} />
-            </Button>
-            <Button
-              onPress={() => this.setState({ pageSelected: 1 })}
-            >
-              <Icon name="camera" style={commonStyles.textPrimary} />
-            </Button>
-            <Button
-              onPress={() => this.setState({ pageSelected: 2 })}
-            >
-              <Icon name="navigate" style={commonStyles.textPrimary} />
-            </Button>
-            <Button
-              onPress={() => this.setState({ pageSelected: 3 })}
-            >
-              <Icon name="person" style={commonStyles.textPrimary} />
-            </Button>
-          </FooterTab>
-        </Footer>
       </Container>
     );
   }

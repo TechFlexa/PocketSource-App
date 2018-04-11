@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from './src/routes/Router';
 import { Font, AppLoading } from 'expo';
-import { AuthUtility } from './src/utils';
+// import { AuthUtility } from './src/utils';
 
 export default class App extends React.Component {
 
@@ -21,7 +21,7 @@ export default class App extends React.Component {
 		  'Roboto_medium': require('./src/assets/fonts/Roboto-Medium.ttf'),
 		});
 
-		await AuthUtility.alreadyLogged();
+		// await AuthUtility.alreadyLogged();
 	}
 
 	render() {

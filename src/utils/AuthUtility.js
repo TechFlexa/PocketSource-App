@@ -7,6 +7,7 @@ const alreadyLogged = () => {
 	AsyncStoreUtility.get('Auth', 'token')
 		.then(token => {
 			if (token != null) {
+				console.log(token);
 				loginSuccessful(token);
 			}
 		})
@@ -17,7 +18,7 @@ const alreadyLogged = () => {
 const loginSuccessful = (token) => {
 	AsyncStoreUtility.set('Auth', 'token', token)
 		.then(() => {
-			ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
+			// ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
 			Actions.Home();
 		})
 		.catch(e => console.log(e));
