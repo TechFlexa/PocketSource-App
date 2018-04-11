@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import axios from 'axios';
-import { Card } from 'native-base';
+import { Card, Spinner, CardItem, Body } from 'native-base';
 
 export default class extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = { 
+            fetched: false,
+            data: [] 
+        };
+
+        this.fetchPosts();
     }
-    componentWillMount() {
+    fetchPosts() {
         axios.post('http://protected-spire-54144.herokuapp.com/api/post/index/')
         .then(response => {
-            this.setState({ data: response.data });
+            this.setState({ 
+                fetched: true,
+                data: response.data.Posts
+            });
         })
         .catch(e => {
             console.log(e);
@@ -24,12 +32,25 @@ export default class extends Component {
     }
     
     render() {
+        if(!this.state.fetched) {
+            return <Spinner />;
+        }
         return (
             <FlatList
                 data={this.state.data}
                 keyExtractor={this.keyExtract.bind(this)}
                 renderItem={
-                    ({ item }) => <Card />
+                    ({ item }) => {
+                        console.log(item);
+                        return (
+                            <Card transparent>
+                              <Body>
+                                  <Text>{item.title}</Text>
+                                  <Text>{item.body}</Text>
+                              </Body>
+                            </Card>
+                        );
+                    }
                 }
             />
         );
