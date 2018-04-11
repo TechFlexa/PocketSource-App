@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import axios from 'axios';
 import { Card, Spinner, CardItem, Body } from 'native-base';
 
@@ -14,15 +14,16 @@ export default class extends Component {
         this.fetchPosts();
     }
     fetchPosts() {
-        axios.post('http://protected-spire-54144.herokuapp.com/api/post/index/')
+        axios.get('http://protected-spire-54144.herokuapp.com/api/post/index')
         .then(response => {
+            console.log('success' + response.data);
             this.setState({ 
                 fetched: true,
-                data: response.data.Posts
+                data: response.data
             });
         })
         .catch(e => {
-            console.log(e);
+            console.log('error' + e);
             }
         );
     }
@@ -32,7 +33,7 @@ export default class extends Component {
     }
     
     render() {
-        if(!this.state.fetched) {
+        if (!this.state.fetched) {
             return <Spinner />;
         }
         return (
