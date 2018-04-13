@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { FlatList, Image } from 'react-native';
 import { 
-	Container, Header, Content,
-	Footer, FooterTab, Button, Icon,
-	Text, Right, Body, Title, View,
-  Spinner, Card, CardItem
-}
-from 'native-base';
-import TabMain from './Tabs/TabMain';
-import AddPost from './Tabs/AddPost';
-import HomeTab from './Tabs/HomeTab';
-import commonStyles from '../common/Styles';
-import { AsyncStoreUtility } from '../utils';
+        Container,
+        Header,
+        Content,
+        Icon,
+        Text, 
+        Right, 
+        Body, 
+        Title,
+        Card,
+        CardItem,
+        Spinner,
+        Left,
+        Thumbnail
+    } from 'native-base';
 import axios from 'axios';
+import commonStyles from '../common/Styles';
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -31,7 +34,7 @@ export default class HomeScreen extends Component {
       .then(response => {
           this.setState({ 
               fetched: true,
-              data: response.data.Posts
+              data: response.data.data
           });
       })
       .catch(e => {
@@ -45,9 +48,9 @@ export default class HomeScreen extends Component {
   }
 
   render() {
-    // if (!this.state.fetched) {
-    //   return <Spinner />;
-    // }
+    if (!this.state.fetched) {
+      return <Spinner />;
+    }
 
     return (
       <Container>
@@ -60,7 +63,7 @@ export default class HomeScreen extends Component {
           </Right>
         </Header>
         <Content>
-          <FlatList
+            <FlatList
                 data={this.state.data}
                 keyExtractor={this.keyExtract.bind(this)}
                 onRefresh={this.fetchPosts.bind(this)}
@@ -70,12 +73,22 @@ export default class HomeScreen extends Component {
                         console.log(item);
                         return (
                             <Card>
-                              <CardItem>
-                                  <Text>{item.title}</Text>
-                              </CardItem>
-                              <CardItem>
-                                  <Text>{item.body}</Text>
-                              </CardItem>
+                                <CardItem>
+                                    <Left>
+                                    <Thumbnail source={{ uri: 'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png' }} />
+                                        <Body>
+                                            <Text>{item.title}</Text>
+                                            <Text note>{item.author}</Text>
+                                        </Body>
+                                    </Left>
+                                </CardItem>
+                                <CardItem cardBody>
+                                    <Image
+                                        // to be replaced by item.cover
+                                        source={{ uri: 'https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg' }}
+                                        style={{ height: 200, width: null, flex: 1, backgroundColor: '#3C3C3C', resizeMode: 'stretch' }} 
+                                    />
+                                </CardItem>
                             </Card>
                         );
                     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Router, Scene, Tabs } from 'react-native-router-flux';
+import { Router, Scene } from 'react-native-router-flux';
 import { Icon, View } from 'native-base';
 import HomeScreen from '../screens/Home';
 import AddPostScreen from '../screens/AddPost';
@@ -7,7 +7,7 @@ import SignUpScreen from '../screens/Signup';
 import LoginScreen from '../screens/Login';
 
 const MainRouter = () => (
-	<View style={{ flex: 1, marginTop: 24}}>
+	<View style={{ flex: 1, marginTop: 24 }}>
 	<Router
 		component={LoginScreen}
 		navigationBarStyle={{ backgroundColor: '#fff200' }}
