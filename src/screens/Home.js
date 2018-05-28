@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, Image } from 'react-native';
+import { FlatList, Image, View } from 'react-native';
 import { 
         Container,
         Header,
         Content,
         Icon,
-        Text, 
-        Right, 
-        Body, 
-        Title,
+        Text,
+        Body,
         Card,
         CardItem,
         Spinner,
@@ -16,6 +14,8 @@ import {
         Thumbnail
     } from 'native-base';
 import axios from 'axios';
+import { AuthUtility } from '../utils';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import commonStyles from '../common/Styles';
 
 export default class HomeScreen extends Component {
@@ -54,14 +54,11 @@ export default class HomeScreen extends Component {
 
     return (
       <Container>
-        <Header style={commonStyles.backgroundWhite}>
-          <Body>
-            <Title style={commonStyles.textPrimary}>PocketSource</Title>
-          </Body>
-          <Right>
-            <Icon name="md-more" />
-          </Right>
-        </Header>
+          <Header style={commonStyles.backgroundWhite}>
+             <MenuContext style={{ flex: 1 }}>
+              <TopNavigation/>
+             </MenuContext>
+          </Header>
         <Content>
             <FlatList
                 data={this.state.data}
@@ -99,3 +96,20 @@ export default class HomeScreen extends Component {
     );
   }
 }
+const TopNavigation = () => (
+    <View style={{ padding: 10, flexDirection: 'row', backgroundColor: '#fff' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Pocket Source</Text></View>
+        <Menu
+            //TODO: signout implenentation
+            onSelect={(value) => AuthUtility.signout() }>
+            <MenuTrigger>
+                <Text style={{ fontSize: 20 }}><Icon name="md-more" /></Text>
+            </MenuTrigger>
+            <MenuOptions>
+                <MenuOption value={1}>
+                    <Text>Sign Out</Text>
+                </MenuOption>
+            </MenuOptions>
+        </Menu>
+    </View>
+);

@@ -75,11 +75,13 @@ export default class SignUpScreen extends React.Component {
         return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <View style={styles.mainContent}>
-					<Text
-						style={styles.title}
-					>
-						SignUp
-					</Text>
+					<View style={{ alignItems: 'center', marginTop: 15}}>
+                        <Text
+                            style={ styles.title  }
+                        >
+                            SignUp Here!!
+                        </Text>
+					</View>
 					<Form>
 						<Item floatingLabel>
 							<Label style={commonStyles.textWhite}>Full Name</Label>
@@ -167,7 +169,7 @@ const styles = {
 	title: {
 		fontSize: 35,
 		color: '#FFF',
-		padding: 8
+
 	},
 
 	loginButton: {

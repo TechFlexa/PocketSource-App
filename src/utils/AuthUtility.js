@@ -23,8 +23,15 @@ const loginSuccessful = (token) => {
 		})
 		.catch(e => console.log(e));
 };
-
+const signout = () => {
+	AsyncStoreUtility.remove('Auth', 'token')
+		.then(() => {
+			Actions.login();
+		})
+        .catch(e => console.log(e));
+};
 module.exports = {
 	alreadyLogged,
-	loginSuccessful
+	loginSuccessful,
+	signout
 };

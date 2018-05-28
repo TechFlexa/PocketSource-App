@@ -96,9 +96,14 @@ export default class LoginScreen extends React.Component {
 			            	{this.renderLoginText()}
 			            </Button>
 			        </Form>
-			        <View style={{ padding: 8 }}>
+			        <View style={{ padding: 8, flex : 1, alignItems: 'center' }}>
 			        <Text>New to PocketSource? </Text>
-			        <Text onPress={() => Actions.signup()}>SignUp Here</Text>
+			          <Text
+						style={{ padding : 5 }}
+						onPress={() => Actions.signup()}
+					>
+						SignUp Here
+					  </Text>
 			        </View>				
          		</View>
 			</KeyboardAvoidingView>
