@@ -1,7 +1,9 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import HudView from 'react-native-hud-view';
 import {
-	Form, Button, Text, View, Item, Label, Input, Spinner
+	Form, Button, Text, View, Item, Label, Input, Spinner,Header,Left,Right,Body
 } from 'native-base';
 import { ToastAndroid } from 'react-native';
 import axios from 'axios';
@@ -14,7 +16,7 @@ export default class AddPost extends React.Component {
 		cover: '',
 		token: '',
 		addPost: false,
-	}
+	};
 
 	submitPost() {
 
@@ -31,19 +33,18 @@ export default class AddPost extends React.Component {
 					}
 				})
 				.then(response => {
-					console.log('---------------', response);
 					if (response.data.success) {
 						console.log('Added');
 						Actions.Home();
-						ToastAndroid.show('Success', ToastAndroid.LONG);
+                        this.refs.hudView.showSuccess();
 					}
 					else {
-						ToastAndroid.show('Failed', ToastAndroid.LONG);
+                        this.refs.hudView.showError()
 					}
 				})
 				.catch(e => {
 					console.log('---$$$$$$$-- Failed');
-					ToastAndroid.show('Failed', ToastAndroid.LONG);
+                    this.refs.hudView.showError()
 				});
 
 			})
@@ -55,13 +56,20 @@ export default class AddPost extends React.Component {
 	renderAddButton() {
 		if (this.state.addPost) {
 			return (
-				<Button disabled>
+				<Button
+				disabled
+				>
 					<Spinner />
 				</Button>
 			);
 		}
 		return (
-			<Button onPress={this.submitPost.bind(this)}>
+			<Button
+				full
+				bordered
+				style={{ marginTop: 20, width: 200, marginLeft : Dimensions.get('window').width/2 - 100 }}
+			onPress={this.submitPost.bind(this)}
+			>
 				<Text>Add Post</Text>
 			</Button>
 		);
@@ -70,6 +78,13 @@ export default class AddPost extends React.Component {
 	render() {
 		return (
 			<View>
+				<Header>
+					<Left/>
+					<Body>
+					<Text>Add Post</Text>
+					</Body>
+					<Right/>
+				</Header>
 				<Form>
 					<Item floatingLabel>
 					  <Label>Title</Label>
@@ -85,6 +100,8 @@ export default class AddPost extends React.Component {
 					</Item>
 					{this.renderAddButton()}
 				</Form>
+                <HudView ref="hudView">
+                </HudView>
 			</View>
 		)
 	}

@@ -97,10 +97,9 @@ export default class HomeScreen extends Component {
   }
 }
 const TopNavigation = () => (
-    <View style={{ padding: 10, flexDirection: 'row', backgroundColor: '#fff' }}>
+    <View style={{ padding:5, flexDirection: 'row', backgroundColor: '#fff' }}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Pocket Source</Text></View>
         <Menu
-            //TODO: signout implenentation
             onSelect={(value) => AuthUtility.signout() }>
             <MenuTrigger>
                 <Text style={{ fontSize: 20 }}><Icon name="md-more" /></Text>

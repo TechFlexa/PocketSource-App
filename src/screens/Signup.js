@@ -1,14 +1,12 @@
 import React from 'react';
+import HudView from 'react-native-hud-view';
 import {
     Text,
     KeyboardAvoidingView,
-	ToastAndroid,
-	StatusBar,
 	View
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
-    Content,
     Button,
     Form,
     Item,
@@ -32,8 +30,6 @@ export default class SignUpScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		StatusBar.setTranslucent(false);
-		StatusBar.setBackgroundColor('#000000');
 		this.setState({ loading: false });
 	}
 	
@@ -51,25 +47,26 @@ export default class SignUpScreen extends React.Component {
 			});
 			console.log(response.data);
 			if (response.data.success) {
-				ToastAndroid.show('Signed up Successfully!', ToastAndroid.SHORT);
 				Actions.login();
+                this.refs.hudView1.showSuccess()
 			} else {
-				ToastAndroid.show('Email Already Taken', ToastAndroid.LONG);
+                this.refs.hudView1.showError()
 			}
 		})
 		.catch(e => {
-			console.log(e);
+		    console.log(e);
+            this.refs.hudView1.showError();
 		});
 	}
 
-	renderSignUpText() {
-		if (this.state.loading) {
-			return (
-				<Text>Signing Up...</Text>
-			);
-		}
-		return <Text>Sign Up</Text>;
-	}
+	// renderSignUpText() {
+	// 	if (this.state.loading) {
+	// 		return (
+	// 			<Text>Signing Up...</Text>
+	// 		);
+	// 	}
+	// 	return <Text>Sign Up</Text>;
+	// }
 
 	render() {
         return (
@@ -126,6 +123,10 @@ export default class SignUpScreen extends React.Component {
 						</Button>
 					</Form>				
 				</View>
+                <HudView
+					ref="hudView1"
+				>
+                </HudView>
 			</KeyboardAvoidingView>
 		);
     }
@@ -135,7 +136,7 @@ const styles = {
 
 	container: {
 		flex: 1,
-		backgroundColor: '#3d3d3d',
+        backgroundColor: '#3d3d3d',
 	},
 
 	head: {
@@ -145,7 +146,7 @@ const styles = {
 	},
 	mainContent: {
 		flex: 1,
-		backgroundColor: '#3d3d3d',
+        backgroundColor: '#3d3d3d',
 	},
 	footer: {
 		flex: 0.5,
