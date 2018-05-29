@@ -5,7 +5,6 @@ import HudView from 'react-native-hud-view';
 import {
 	Form, Button, Text, View, Item, Label, Input, Spinner,Header,Left,Right,Body
 } from 'native-base';
-import { ToastAndroid } from 'react-native';
 import axios from 'axios';
 import { AsyncStoreUtility } from '../utils';
 
@@ -35,16 +34,18 @@ export default class AddPost extends React.Component {
 				.then(response => {
 					if (response.data.success) {
 						console.log('Added');
+                        this.refs.hudView.showSuccess()
 						Actions.Home();
-                        this.refs.hudView.showSuccess();
 					}
 					else {
-                        this.refs.hudView.showError()
+                        this.refs.hudView.hide();
+                        alert("Something went wrong");
 					}
 				})
 				.catch(e => {
 					console.log('---$$$$$$$-- Failed');
-                    this.refs.hudView.showError()
+					this.refs.hudView.hide();
+                    alert("Something went wrong");
 				});
 
 			})

@@ -3,15 +3,15 @@ import HudView from 'react-native-hud-view';
 import {
     Text,
     KeyboardAvoidingView,
-	View
+	View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
-    Button,
     Form,
     Item,
     Label,
-    Input
+    Input,
+    Button
 } from 'native-base';
 import axios from 'axios';
 import commonStyles from '../common/Styles';
@@ -26,7 +26,8 @@ export default class SignUpScreen extends React.Component {
 			password: '',
 			c_password: '',
 		};
-		this.signupButtonPress = this.signupButtonPress.bind(this);
+
+        this.signupButtonPress =  this.signupButtonPress.bind(this);
 	}
 
 	componentDidMount() {
@@ -35,6 +36,7 @@ export default class SignUpScreen extends React.Component {
 	
 	signupButtonPress() {
 		this.setState({ loading: true });
+		this.refs.hudView.showSpinner();
 		axios.post('http://protected-spire-54144.herokuapp.com/api/register', {
 			email: this.state.email,
 			name: this.state.name,
@@ -48,14 +50,16 @@ export default class SignUpScreen extends React.Component {
 			console.log(response.data);
 			if (response.data.success) {
 				Actions.login();
-                this.refs.hudView1.showSuccess()
+                this.refs.hudView.showSuccess()
 			} else {
-                this.refs.hudView1.showError()
+                this.refs.hudView.hide();
+                alert("Something went wrong");
 			}
 		})
 		.catch(e => {
 		    console.log(e);
-            this.refs.hudView1.showError();
+            this.refs.hudView.hide();
+            alert("Something went wrong");
 		});
 	}
 
@@ -71,61 +75,56 @@ export default class SignUpScreen extends React.Component {
 	render() {
         return (
 			<KeyboardAvoidingView behavior="padding" style={styles.container}>
-                <View style={styles.mainContent}>
-					<View style={{ alignItems: 'center', marginTop: 15}}>
-                        <Text
-                            style={ styles.title  }
-                        >
-                            SignUp Here!!
-                        </Text>
-					</View>
+                <View style={styles.head}>
+                    <Text
+                        style={ styles.logo  }
+                    >
+                        SignUp!!
+                    </Text>
+                </View>
+                <View style={styles.mainContainer}>
 					<Form>
 						<Item floatingLabel>
-							<Label style={commonStyles.textWhite}>Full Name</Label>
+							<Label>Full Name</Label>
 							<Input
-								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent'
 								onChangeText={(name) => this.setState({ name })}
 							/>
 						</Item>
 						<Item floatingLabel>
-							<Label style={commonStyles.textWhite}>Email</Label>
+							<Label>Email</Label>
 							<Input
-								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent' 
 								onChangeText={(email) => this.setState({ email })}	
 							/>
 						</Item>
                         <Item floatingLabel>
-							<Label style={commonStyles.textWhite}>Password</Label>
+							<Label>Password</Label>
 							<Input
 								secureTextEntry
-								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent'
 								onChangeText={(password) => this.setState({ password })}
 							/>
 						</Item>
                         <Item floatingLabel>
-							<Label style={commonStyles.textWhite}>Confirm Password</Label>
+							<Label>Confirm Password</Label>
 							<Input
 								secureTextEntry
-								style={commonStyles.textWhite}
 								underlineColorAndroid='transparent'
 								onChangeText={(c_password) => this.setState({ c_password })}
 							/>
 						</Item>
-						<Button 
-							full
+						<Button
+                            full
 							style={styles.loginButton}
 							onPress={this.signupButtonPress}
 						>
-							<Text>Sign Up</Text>
+							<Text style={commonStyles.textWhite}>Sign Up</Text>
 						</Button>
-					</Form>				
+					</Form>
 				</View>
-                <HudView
-					ref="hudView1"
-				>
+                <HudView ref="hudView"
+                >
                 </HudView>
 			</KeyboardAvoidingView>
 		);
@@ -136,7 +135,7 @@ const styles = {
 
 	container: {
 		flex: 1,
-        backgroundColor: '#3d3d3d',
+        backgroundColor: '#f1f2f6',
 	},
 
 	head: {
@@ -146,7 +145,7 @@ const styles = {
 	},
 	mainContent: {
 		flex: 1,
-        backgroundColor: '#3d3d3d',
+        backgroundColor: '#f1f2f6',
 	},
 	footer: {
 		flex: 0.5,
@@ -155,13 +154,12 @@ const styles = {
 	},
 
 	logo: {
-		fontWeight: 'bold',
-		fontSize: 25,
-		backgroundColor: '#3d3d3d',
-		padding: 10,
-		color: '#fffa65',
-		borderRadius: 5,
-
+        fontWeight: 'bold',
+        fontSize: 25,
+        backgroundColor: '#2ed573',
+        padding: 10,
+        color: '#f1f2f6',
+        borderRadius: 5,
 	},
 
 	label: {
@@ -176,7 +174,7 @@ const styles = {
 	loginButton: {
 		margin: 8,
 		borderRadius: 4,
-		backgroundColor: '#fff200',
+		backgroundColor: '#2ed573',
 		marginTop: 20
 	},
 

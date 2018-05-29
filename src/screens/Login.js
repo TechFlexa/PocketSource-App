@@ -54,11 +54,13 @@ export default class LoginScreen extends React.Component {
 				AuthUtility.loginSuccessful(this.state.token);
 				this.refs.hudView.showSuccess()
 			} else {
-                this.refs.hudView.showError();
+                this.refs.hudView.hide();
+                alert("Something went wrong");
 			}
 		})
 		.catch(e => {
-            this.refs.hudView.showError();
+            this.refs.hudView.hide();
+            alert("Something went wrong");
 			console.log(e);
 		});
 	}
