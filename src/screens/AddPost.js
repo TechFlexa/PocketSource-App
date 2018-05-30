@@ -91,7 +91,9 @@ export default class AddPost extends React.Component {
 					  <Label>Title</Label>
 					  <Input onChangeText={(title) => this.setState({title})} />
 					</Item>
-					<Item floatingLabel>
+					<Item floatingLabel
+                          style={{padding: 10}}
+					>
 					  <Label>Body</Label>
 					  <Input onChangeText={(body) => this.setState({body})} multiline numberOfLines={4} />
 					</Item>

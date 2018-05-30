@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Image, View } from 'react-native';
+import { FlatList, Image, View, Linking } from 'react-native';
 import { 
         Container,
         Header,
@@ -11,7 +11,8 @@ import {
         CardItem,
         Spinner,
         Left,
-        Thumbnail
+        Thumbnail,
+        Button
     } from 'native-base';
 import axios from 'axios';
 import { AuthUtility } from '../utils';
@@ -70,7 +71,11 @@ export default class HomeScreen extends Component {
                         console.log(item);
                         return (
                             <Card>
-                                <CardItem>
+                                <CardItem
+                                    button
+                                    onPress={() => Linking.openURL('https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg')}
+                                    //TODO: reaplced by item.url
+                                >
                                     <Left>
                                     <Thumbnail source={{ uri: 'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png' }} />
                                         <Body>
@@ -79,9 +84,14 @@ export default class HomeScreen extends Component {
                                         </Body>
                                     </Left>
                                 </CardItem>
-                                <CardItem cardBody>
+                                <CardItem
+                                    cardBody
+                                    button
+                                    onPress={() => Linking.openURL('https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg')}
+                                    //TODO: reaplced by item.url
+                                >
                                     <Image
-                                        // to be replaced by item.cover
+                                        //TODO: replaced by item.cover
                                         source={{ uri: 'https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg' }}
                                         style={{ height: 200, width: null, flex: 1, backgroundColor: '#3C3C3C', resizeMode: 'stretch' }} 
                                     />
