@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { FlatList, Image } from 'react-native';
+import { FlatList, Image, View, Linking } from 'react-native';
 import { 
         Container,
         Header,
         Content,
         Icon,
-        Text, 
-        Right, 
-        Body, 
-        Title,
+        Text,
+        Body,
         Card,
         CardItem,
         Spinner,
         Left,
-        Thumbnail
+        Thumbnail,
+        Button
     } from 'native-base';
 import axios from 'axios';
+import { AuthUtility } from '../utils';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import commonStyles from '../common/Styles';
 
 export default class HomeScreen extends Component {
@@ -54,14 +55,11 @@ export default class HomeScreen extends Component {
 
     return (
       <Container>
-        <Header style={commonStyles.backgroundWhite}>
-          <Body>
-            <Title style={commonStyles.textPrimary}>PocketSource</Title>
-          </Body>
-          <Right>
-            <Icon name="md-more" />
-          </Right>
-        </Header>
+          <Header style={commonStyles.backgroundWhite}>
+             <MenuContext style={{ flex: 1 }}>
+              <TopNavigation/>
+             </MenuContext>
+          </Header>
         <Content>
             <FlatList
                 data={this.state.data}
@@ -73,7 +71,11 @@ export default class HomeScreen extends Component {
                         console.log(item);
                         return (
                             <Card>
-                                <CardItem>
+                                <CardItem
+                                    button
+                                    onPress={() => Linking.openURL('https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg')}
+                                    //TODO: reaplced by item.url
+                                >
                                     <Left>
                                     <Thumbnail source={{ uri: 'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png' }} />
                                         <Body>
@@ -82,9 +84,14 @@ export default class HomeScreen extends Component {
                                         </Body>
                                     </Left>
                                 </CardItem>
-                                <CardItem cardBody>
+                                <CardItem
+                                    cardBody
+                                    button
+                                    onPress={() => Linking.openURL('https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg')}
+                                    //TODO: reaplced by item.url
+                                >
                                     <Image
-                                        // to be replaced by item.cover
+                                        //TODO: replaced by item.cover
                                         source={{ uri: 'https://pbs.twimg.com/media/DYjXs1eU0AYDYgV.jpg' }}
                                         style={{ height: 200, width: null, flex: 1, backgroundColor: '#3C3C3C', resizeMode: 'stretch' }} 
                                     />
@@ -99,3 +106,19 @@ export default class HomeScreen extends Component {
     );
   }
 }
+const TopNavigation = () => (
+    <View style={{ padding:5, flexDirection: 'row', backgroundColor: '#fff' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Pocket Source</Text></View>
+        <Menu
+            onSelect={(value) => AuthUtility.signout() }>
+            <MenuTrigger>
+                <Text style={{ fontSize: 20 }}><Icon name="md-more" /></Text>
+            </MenuTrigger>
+            <MenuOptions>
+                <MenuOption value={1}>
+                    <Text>Sign Out</Text>
+                </MenuOption>
+            </MenuOptions>
+        </Menu>
+    </View>
+);

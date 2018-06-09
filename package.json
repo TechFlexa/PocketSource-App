@@ -25,6 +25,8 @@
     "react": "16.3.0-alpha.1",
     "react-native": "0.52.0",
     "react-native-dotenv": "^0.1.1",
-    "react-native-router-flux": "^4.0.0-beta.28"
+    "react-native-hud-view": "^1.2.2",
+    "react-native-menu": "^0.23.0",
+    "react-native-router-flux": "^4.0.0-beta.31"
   }
 }

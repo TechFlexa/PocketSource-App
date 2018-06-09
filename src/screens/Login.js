@@ -1,7 +1,7 @@
 import React from 'react';
+import HudView from 'react-native-hud-view';
 import {
 	View, Text, KeyboardAvoidingView,
-	ToastAndroid
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -11,6 +11,7 @@ import {
 	Label,
 	Button,
 	Spinner,
+	Container,
 } from 'native-base';
 import axios from 'axios';
 import commonStyles from '../common/Styles';
@@ -34,7 +35,7 @@ export default class LoginScreen extends React.Component {
 	loginButtonPress() {
 		//Call API
 		this.setState({ loading: true });
-
+        this.refs.hudView.showSpinner()
 		axios.post('http://protected-spire-54144.herokuapp.com/api/login', {
 			email: this.state.email,
 			password: this.state.password,
@@ -51,11 +52,15 @@ export default class LoginScreen extends React.Component {
 
 				//Utitlity function to handle successful login
 				AuthUtility.loginSuccessful(this.state.token);
+				this.refs.hudView.showSuccess()
 			} else {
-				ToastAndroid.show('Invaild Credentials', ToastAndroid.LONG);
+                this.refs.hudView.hide();
+                alert("Something went wrong");
 			}
 		})
 		.catch(e => {
+            this.refs.hudView.hide();
+            alert("Something went wrong");
 			console.log(e);
 		});
 	}
@@ -88,19 +93,27 @@ export default class LoginScreen extends React.Component {
 			              	secureTextEntry
 			              />
 			            </Item>
-			            <Button
-							full
-							style={styles.loginButton}
-			            	onPress={this.loginButtonPress}
-			            >
-			            	{this.renderLoginText()}
-			            </Button>
+                            <Button
+                                full
+                                style={styles.loginButton}
+                                onPress={this.loginButtonPress}
+                            >
+                                {this.renderLoginText()}
+                            </Button>
 			        </Form>
-			        <View style={{ padding: 8 }}>
+			        <View style={{ padding: 8, flex : 1, alignItems: 'center' }}>
 			        <Text>New to PocketSource? </Text>
-			        <Text onPress={() => Actions.signup()}>SignUp Here</Text>
+			          <Text
+						style={{ padding : 5 }}
+						onPress={() => Actions.signup()}
+					>
+						SignUp Here
+					  </Text>
 			        </View>				
          		</View>
+                <HudView ref="hudView"
+				>
+                </HudView>
 			</KeyboardAvoidingView>
 		);
 	}

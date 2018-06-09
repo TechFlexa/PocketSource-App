@@ -1,4 +1,3 @@
-import { ToastAndroid } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { AsyncStoreUtility } from './index';
 
@@ -18,13 +17,19 @@ const alreadyLogged = () => {
 const loginSuccessful = (token) => {
 	AsyncStoreUtility.set('Auth', 'token', token)
 		.then(() => {
-			// ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
 			Actions.Home();
 		})
 		.catch(e => console.log(e));
 };
-
+const signout = () => {
+	AsyncStoreUtility.remove('Auth', 'token')
+		.then(() => {
+			Actions.login();
+		})
+        .catch(e => console.log(e));
+};
 module.exports = {
 	alreadyLogged,
-	loginSuccessful
+	loginSuccessful,
+	signout
 };

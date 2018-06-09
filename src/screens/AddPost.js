@@ -1,9 +1,10 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import HudView from 'react-native-hud-view';
 import {
-	Form, Button, Text, View, Item, Label, Input, Spinner
+	Form, Button, Text, View, Item, Label, Input, Spinner,Header,Left,Right,Body
 } from 'native-base';
-import { ToastAndroid } from 'react-native';
 import axios from 'axios';
 import { AsyncStoreUtility } from '../utils';
 
@@ -14,7 +15,7 @@ export default class AddPost extends React.Component {
 		cover: '',
 		token: '',
 		addPost: false,
-	}
+	};
 
 	submitPost() {
 
@@ -31,19 +32,20 @@ export default class AddPost extends React.Component {
 					}
 				})
 				.then(response => {
-					console.log('---------------', response);
 					if (response.data.success) {
 						console.log('Added');
+                        this.refs.hudView.showSuccess()
 						Actions.Home();
-						ToastAndroid.show('Success', ToastAndroid.LONG);
 					}
 					else {
-						ToastAndroid.show('Failed', ToastAndroid.LONG);
+                        this.refs.hudView.hide();
+                        alert("Something went wrong");
 					}
 				})
 				.catch(e => {
 					console.log('---$$$$$$$-- Failed');
-					ToastAndroid.show('Failed', ToastAndroid.LONG);
+					this.refs.hudView.hide();
+                    alert("Something went wrong");
 				});
 
 			})
@@ -55,13 +57,20 @@ export default class AddPost extends React.Component {
 	renderAddButton() {
 		if (this.state.addPost) {
 			return (
-				<Button disabled>
+				<Button
+				disabled
+				>
 					<Spinner />
 				</Button>
 			);
 		}
 		return (
-			<Button onPress={this.submitPost.bind(this)}>
+			<Button
+				full
+				bordered
+				style={{ marginTop: 20, width: 200, marginLeft : Dimensions.get('window').width/2 - 100 }}
+			onPress={this.submitPost.bind(this)}
+			>
 				<Text>Add Post</Text>
 			</Button>
 		);
@@ -70,12 +79,21 @@ export default class AddPost extends React.Component {
 	render() {
 		return (
 			<View>
+				<Header>
+					<Left/>
+					<Body>
+					<Text>Add Post</Text>
+					</Body>
+					<Right/>
+				</Header>
 				<Form>
 					<Item floatingLabel>
 					  <Label>Title</Label>
 					  <Input onChangeText={(title) => this.setState({title})} />
 					</Item>
-					<Item floatingLabel>
+					<Item floatingLabel
+                          style={{padding: 10}}
+					>
 					  <Label>Body</Label>
 					  <Input onChangeText={(body) => this.setState({body})} multiline numberOfLines={4} />
 					</Item>
@@ -85,6 +103,8 @@ export default class AddPost extends React.Component {
 					</Item>
 					{this.renderAddButton()}
 				</Form>
+                <HudView ref="hudView">
+                </HudView>
 			</View>
 		)
 	}
